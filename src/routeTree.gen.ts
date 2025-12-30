@@ -9,38 +9,121 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FormularioRouteImport } from './routes/formulario'
+import { Route as EnviadosRouteImport } from './routes/enviados'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TemplatesIndexRouteImport } from './routes/templates/index'
+import { Route as ReportsIndexRouteImport } from './routes/reports/index'
+import { Route as TemplatesCreateRouteImport } from './routes/templates/create'
 
+const FormularioRoute = FormularioRouteImport.update({
+  id: '/formulario',
+  path: '/formulario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnviadosRoute = EnviadosRouteImport.update({
+  id: '/enviados',
+  path: '/enviados',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TemplatesIndexRoute = TemplatesIndexRouteImport.update({
+  id: '/templates/',
+  path: '/templates/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/reports/',
+  path: '/reports/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesCreateRoute = TemplatesCreateRouteImport.update({
+  id: '/templates/create',
+  path: '/templates/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/enviados': typeof EnviadosRoute
+  '/formulario': typeof FormularioRoute
+  '/templates/create': typeof TemplatesCreateRoute
+  '/reports': typeof ReportsIndexRoute
+  '/templates': typeof TemplatesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/enviados': typeof EnviadosRoute
+  '/formulario': typeof FormularioRoute
+  '/templates/create': typeof TemplatesCreateRoute
+  '/reports': typeof ReportsIndexRoute
+  '/templates': typeof TemplatesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/enviados': typeof EnviadosRoute
+  '/formulario': typeof FormularioRoute
+  '/templates/create': typeof TemplatesCreateRoute
+  '/reports/': typeof ReportsIndexRoute
+  '/templates/': typeof TemplatesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/enviados'
+    | '/formulario'
+    | '/templates/create'
+    | '/reports'
+    | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/enviados'
+    | '/formulario'
+    | '/templates/create'
+    | '/reports'
+    | '/templates'
+  id:
+    | '__root__'
+    | '/'
+    | '/enviados'
+    | '/formulario'
+    | '/templates/create'
+    | '/reports/'
+    | '/templates/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EnviadosRoute: typeof EnviadosRoute
+  FormularioRoute: typeof FormularioRoute
+  TemplatesCreateRoute: typeof TemplatesCreateRoute
+  ReportsIndexRoute: typeof ReportsIndexRoute
+  TemplatesIndexRoute: typeof TemplatesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/formulario': {
+      id: '/formulario'
+      path: '/formulario'
+      fullPath: '/formulario'
+      preLoaderRoute: typeof FormularioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enviados': {
+      id: '/enviados'
+      path: '/enviados'
+      fullPath: '/enviados'
+      preLoaderRoute: typeof EnviadosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +131,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/templates/': {
+      id: '/templates/'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates/create': {
+      id: '/templates/create'
+      path: '/templates/create'
+      fullPath: '/templates/create'
+      preLoaderRoute: typeof TemplatesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EnviadosRoute: EnviadosRoute,
+  FormularioRoute: FormularioRoute,
+  TemplatesCreateRoute: TemplatesCreateRoute,
+  ReportsIndexRoute: ReportsIndexRoute,
+  TemplatesIndexRoute: TemplatesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

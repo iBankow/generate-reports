@@ -135,4 +135,45 @@ code {
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Tiptap editor styles */
+  .ProseMirror {
+    outline: none;
+  }
+
+  .ProseMirror:focus {
+    outline: none;
+  }
+
+  /* Inline nodes stay on same line */
+  .ProseMirror [data-type="fieldNode"] {
+    display: inline;
+    white-space: nowrap;
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  .ProseMirror [contenteditable="false"] {
+    display: inline;
+    vertical-align: middle;
+  }
+
+  .ProseMirror p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #9ca3af;
+    pointer-events: none;
+    height: 0;
+  }
+
+  .EditorContent {
+    width: 100%;
+  }
 }
+
+
