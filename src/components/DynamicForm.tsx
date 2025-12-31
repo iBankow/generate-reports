@@ -3,6 +3,7 @@ import type { FormField, FormSubmission, ImageListItem } from '@/types/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { formatNumber, unformatNumber } from '@/lib/number-formatter'
 
 interface DynamicFormProps {
   title: string
@@ -33,9 +34,12 @@ export function DynamicForm({
   }
 
   const handleNumberChange = (fieldId: string, value: string) => {
+    // Remove formatação anterior para obter apenas números
+    const unformatted = unformatNumber(value)
+
     const newData = {
       ...formData,
-      [fieldId]: value ? parseFloat(value) : null,
+      [fieldId]: unformatted ? unformatted : '',
     }
     setFormData(newData)
     onDataChange?.(newData)
@@ -178,20 +182,30 @@ export function DynamicForm({
               <Textarea
                 value={(formData[field.id] as string) || ''}
                 onChange={(e) => handleTextChange(field.id, e.target.value)}
-                placeholder={field.placeholder}
-                required={field.required}
-                rows={3}
               />
             )}
 
             {field.type === 'number' && (
-              <Input
-                type="number"
-                value={(formData[field.id] as number) || ''}
-                onChange={(e) => handleNumberChange(field.id, e.target.value)}
-                placeholder={field.placeholder}
-                required={field.required}
-              />
+              <div className="space-y-2">
+                <Input
+                  type="text"
+                  value={
+                    formData[field.id]
+                      ? formatNumber(String(formData[field.id]), (field as any)?.numberFormat || 'simple')
+                      : ''
+                  }
+                  onChange={(e) => handleNumberChange(field.id, e.target.value)}
+                  placeholder={field.placeholder}
+                  required={field.required}
+                />
+                {(field as any)?.numberFormat && (
+                  <div className="text-xs text-gray-500">
+                    {(field as any)?.numberFormat === 'currency' && 'Formato: Moeda (R$)'}
+                    {(field as any)?.numberFormat === 'document' && 'Formato: CPF/CNPJ'}
+                    {(field as any)?.numberFormat === 'simple' && 'Formato: Número simples'}
+                  </div>
+                )}
+              </div>
             )}
 
             {field.type === 'image' && (

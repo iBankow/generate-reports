@@ -58,6 +58,7 @@ export function TemplateEditor({
             id: node.attrs.id,
             label: node.attrs.label,
             type: node.attrs.type,
+            numberFormat: node.attrs.numberFormat,
             name: node.attrs.label.toLowerCase().replace(/\s+/g, '_'),
             required: true,
           })
@@ -80,6 +81,7 @@ export function TemplateEditor({
     id: string
     label: string
     type: string
+    numberFormat?: string
   }) => {
     editor
       .chain()
@@ -90,6 +92,7 @@ export function TemplateEditor({
           id: data.id,
           label: data.label,
           type: data.type,
+          numberFormat: data.numberFormat || 'simple',
         },
       })
       .insertContent(' ')

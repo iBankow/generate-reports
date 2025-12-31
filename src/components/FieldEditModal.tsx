@@ -7,8 +7,9 @@ interface FieldEditModalProps {
     id: string
     label: string
     type: string
+    numberFormat?: string
   }
-  onSave: (data: { id: string; label: string; type: string }) => void
+  onSave: (data: { id: string; label: string; type: string; numberFormat?: string }) => void
   onClose: () => void
 }
 
@@ -20,10 +21,17 @@ const FIELD_TYPES = [
   { value: 'list', label: 'Lista Simples', emoji: '📋' },
 ]
 
+const NUMBER_FORMATS = [
+  { value: 'simple', label: 'Número Simples', example: '1234567' },
+  { value: 'currency', label: 'Moeda (R$)', example: 'R$ 1.234,56' },
+  { value: 'document', label: 'Documento (CPF/CNPJ)', example: '123.456.789-00' },
+]
+
 export function FieldEditModal({ initialData, onSave, onClose }: FieldEditModalProps) {
   const [id, setId] = useState(initialData.id)
   const [label, setLabel] = useState(initialData.label)
   const [type, setType] = useState(initialData.type)
+  const [numberFormat, setNumberFormat] = useState(initialData.numberFormat || 'simple')
   const [error, setError] = useState('')
 
   const handleSave = () => {
@@ -46,7 +54,18 @@ export function FieldEditModal({ initialData, onSave, onClose }: FieldEditModalP
       return
     }
 
-    onSave({ id, label, type })
+    const saveData: { id: string; label: string; type: string; numberFormat?: string } = {
+      id,
+      label,
+      type,
+    }
+
+    // Adicionar numberFormat apenas se o tipo for 'number'
+    if (type === 'number') {
+      saveData.numberFormat = numberFormat
+    }
+
+    onSave(saveData)
   }
 
   return (
@@ -106,6 +125,29 @@ export function FieldEditModal({ initialData, onSave, onClose }: FieldEditModalP
               ))}
             </div>
           </div>
+
+          {type === 'number' && (
+            <div className="field-modal-group">
+              <label className="field-modal-label">Formato de Número *</label>
+              <div className="field-modal-types">
+                {NUMBER_FORMATS.map(({ value, label: formatLabel, example }) => (
+                  <button
+                    key={value}
+                    onClick={() => {
+                      setNumberFormat(value)
+                      setError('')
+                    }}
+                    className={`field-modal-type-btn ${numberFormat === value ? 'field-modal-type-selected' : ''}`}
+                  >
+                    <span className="field-modal-type-label">{formatLabel}</span>
+                    <span className="field-modal-help" style={{ fontSize: '0.7rem', marginTop: '0.25rem' }}>
+                      {example}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {error && <div className="field-modal-error">{error}</div>}
         </div>

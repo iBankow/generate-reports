@@ -25,13 +25,14 @@ export function FieldNodeComponent({
   selected,
 }: FieldNodeComponentProps) {
   const [showModal, setShowModal] = useState(false)
-  const { id, label, type } = node.attrs
+  const { id, label, type, numberFormat } = node.attrs
 
-  const handleSave = (data: { label: string; type: string; id: string }) => {
+  const handleSave = (data: { label: string; type: string; id: string; numberFormat?: string }) => {
     updateAttributes({
       id: data.id,
       label: data.label,
       type: data.type,
+      numberFormat: data.numberFormat,
     })
     setShowModal(false)
   }
@@ -53,7 +54,7 @@ export function FieldNodeComponent({
 
       {showModal && (
         <FieldEditModal
-          initialData={{ id, label, type }}
+          initialData={{ id, label, type, numberFormat }}
           onSave={handleSave}
           onClose={() => setShowModal(false)}
         />

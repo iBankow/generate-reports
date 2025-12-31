@@ -1,9 +1,11 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { ArrowLeft } from 'lucide-react'
 import type { FormSubmission, FormTemplate } from '@/types/form'
 import { DynamicForm } from '@/components/DynamicForm'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { formatNumber } from '@/lib/number-formatter'
 import './routes.css'
 
 export const Route = createFileRoute('/formulario')({
@@ -32,6 +34,7 @@ function RouteComponent() {
     fieldType: string,
     value: unknown,
     label: string,
+    numberFormat?: string,
   ): string => {
     const emptyFieldHTML = `<span class="route-empty-field" style="padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block;">${label}</span>`
 
@@ -51,8 +54,8 @@ function RouteComponent() {
           .filter((item) => item.url)
           .map(
             (item) =>
-              `<div style="margin-bottom: 12px; text-align: center;">
-              <img src="${item.url}" alt="${item.description}" style="max-width: 100%; max-height: 200px; border-radius: 4px; border: 1px solid var(--primary);" />
+              `<div style="margin-bottom: 12px; text-align: center; margin-top: 8px">
+              <img src="${item.url}" alt="${item.description}" style="max-width: 100%; max-height: 200px; border-radius: 4px; border: 1px solid var(--primary); ; margin-left: auto; margin-right: auto;" />
               ${item.description ? `<p style="margin-top: 4px; font-size: 0.875rem; color: var(--muted-foreground);">${item.description}</p>` : ''}
             </div>`,
           )
@@ -74,8 +77,12 @@ function RouteComponent() {
           : emptyFieldHTML
       }
 
+      case 'number': {
+        const displayValue = formatNumber(value as number, numberFormat)
+        return `<span class="route-value-badge" style="padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block;">${displayValue}</span>`
+      }
+
       case 'text':
-      case 'number':
       default: {
         const displayValue = String(value)
         return `<span class="route-value-badge" style="padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block;">${displayValue}</span>`
@@ -101,7 +108,12 @@ function RouteComponent() {
         'gi',
       )
 
-      const replacement = renderFieldPreview(field.type, value, field.label)
+      const replacement = renderFieldPreview(
+        field.type,
+        value,
+        field.label,
+        field.numberFormat,
+      )
       html = html.replace(fieldPattern, replacement)
     })
 
@@ -157,14 +169,14 @@ function RouteComponent() {
             variant="outline"
             onClick={() => navigate({ to: '/templates' })}
           >
-            ← Voltar para Templates
+            <ArrowLeft /> Voltar para Templates
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="flex gap-2">
           {/* Coluna de Formulário */}
-          <div>
-            <Card className="p-6 route-card">
+          <div className="w-2/5">
+            <Card className="p-5 route-card">
               <DynamicForm
                 title={template.title}
                 description={template.description}
@@ -178,11 +190,11 @@ function RouteComponent() {
           </div>
 
           {/* Coluna de Preview */}
-          <div>
-            <Card className="p-6 sticky top-8 route-card">
-              <h2 className="text-2xl font-bold mb-4">Previsualizacao</h2>
+          <div className="w-full">
+            <Card className="p-6 sticky top-8 route-card h-full">
+              <h2 className="text-2xl font-bold mb-4">Pre Visualização</h2>
               <div
-                className="prose prose-sm max-w-none p-4 rounded route-preview-bg"
+                className="prose prose-sm max-w-none p-4 rounded route-preview-bg overflow-y-auto max-h-full"
                 dangerouslySetInnerHTML={{ __html: getPreviewContent() }}
               />
             </Card>

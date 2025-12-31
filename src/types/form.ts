@@ -7,6 +7,7 @@ export interface FormField {
   label: string
   placeholder?: string
   required?: boolean
+  numberFormat?: 'simple' | 'currency' | 'document'
 }
 
 export interface FormTemplate {

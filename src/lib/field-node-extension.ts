@@ -6,6 +6,7 @@ export interface FieldNodeAttributes {
   id: string
   label: string
   type: string
+  numberFormat?: string
 }
 
 export const FieldNode = TiptapNode.create({
@@ -23,6 +24,9 @@ export const FieldNode = TiptapNode.create({
       },
       type: {
         default: 'text',
+      },
+      numberFormat: {
+        default: 'simple',
       },
     }
   },
