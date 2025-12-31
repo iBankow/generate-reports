@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import './routes.css'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -24,13 +25,11 @@ function RouteComponent() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-blue-50 p-8">
+    <div className="min-h-screen p-8 route-container">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-2">
-            Gerador de Relatórios
-          </h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-5xl font-bold mb-2">Gerador de Relatórios</h1>
+          <p className="text-xl route-text-muted">
             Crie templates de formulários dinâmicos e colete dados facilmente
           </p>
         </div>
@@ -38,36 +37,40 @@ function RouteComponent() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
           {/* Card de Criar Template */}
           <Card
-            className="p-8 flex flex-col items-center justify-center bg-white hover:shadow-xl transition cursor-pointer hover:border-blue-400"
-            onClick={() => navigate({ to: '/templates/create', search: { editId: undefined } })}
+            className="p-8 flex flex-col items-center justify-center hover:shadow-xl transition cursor-pointer route-card"
+            onClick={() =>
+              navigate({
+                to: '/templates/create',
+                search: { editId: undefined },
+              })
+            }
+            style={{ borderColor: 'var(--primary)' }}
           >
             <div className="text-5xl mb-4">📝</div>
             <h2 className="text-2xl font-bold mb-2">Novo Template</h2>
-            <p className="text-gray-600 text-center mb-4">
+            <p className="route-text-muted text-center mb-4">
               Crie um novo template de formulário
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 w-full">
+            <Button className="route-button-primary w-full">
               Criar Template
             </Button>
           </Card>
 
           {/* Card de Templates */}
           <Card
-            className="p-8 flex flex-col justify-between bg-white hover:shadow-xl transition cursor-pointer hover:border-green-400"
+            className="p-8 flex flex-col justify-between hover:shadow-xl transition cursor-pointer route-card"
             onClick={() => navigate({ to: '/templates' })}
           >
             <div>
               <div className="text-5xl mb-4">📋</div>
               <h2 className="text-2xl font-bold mb-2">Templates</h2>
-              <p className="text-gray-600 text-center mb-4">
+              <p className="route-text-muted text-center mb-4">
                 Gerencie seus templates
               </p>
             </div>
-            <div className="bg-green-50 rounded p-3 mb-4 text-center">
-              <div className="text-3xl font-bold text-green-600">
-                {stats.templates}
-              </div>
-              <div className="text-sm text-gray-600">
+            <div className="route-bg-secondary rounded p-3 mb-4 text-center">
+              <div className="text-3xl font-bold">{stats.templates}</div>
+              <div className="text-sm route-text-muted">
                 template{stats.templates !== 1 ? 's' : ''} criado
                 {stats.templates !== 1 ? 's' : ''}
               </div>
@@ -79,21 +82,19 @@ function RouteComponent() {
 
           {/* Card de Envios */}
           <Card
-            className="p-8 flex flex-col justify-between bg-white hover:shadow-xl transition cursor-pointer hover:border-purple-400"
+            className="p-8 flex flex-col justify-between hover:shadow-xl transition cursor-pointer route-card"
             onClick={() => navigate({ to: '/enviados' })}
           >
             <div>
               <div className="text-5xl mb-4">📊</div>
               <h2 className="text-2xl font-bold mb-2">Envios</h2>
-              <p className="text-gray-600 text-center mb-4">
+              <p className="route-text-muted text-center mb-4">
                 Visualize dados coletados
               </p>
             </div>
-            <div className="bg-purple-50 rounded p-3 mb-4 text-center">
-              <div className="text-3xl font-bold text-purple-600">
-                {stats.submissions}
-              </div>
-              <div className="text-sm text-gray-600">
+            <div className="route-bg-accent rounded p-3 mb-4 text-center">
+              <div className="text-3xl font-bold">{stats.submissions}</div>
+              <div className="text-sm route-text-muted">
                 formulário{stats.submissions !== 1 ? 's' : ''} enviado
                 {stats.submissions !== 1 ? 's' : ''}
               </div>

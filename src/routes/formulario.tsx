@@ -4,6 +4,7 @@ import type { FormSubmission, FormTemplate } from '@/types/form'
 import { DynamicForm } from '@/components/DynamicForm'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import './routes.css'
 
 export const Route = createFileRoute('/formulario')({
   component: RouteComponent,
@@ -32,7 +33,7 @@ function RouteComponent() {
     value: unknown,
     label: string,
   ): string => {
-    const emptyFieldHTML = `<span style="background-color: #f3f4f6; color: #6b7280; padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block; border: 1px dashed #d1d5db;">${label}</span>`
+    const emptyFieldHTML = `<span class="route-empty-field" style="padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block;">${label}</span>`
 
     // Se não tem valor, retorna campo vazio
     if (value === undefined || value === null || value === '') {
@@ -41,7 +42,7 @@ function RouteComponent() {
 
     switch (fieldType) {
       case 'image': {
-        return `<img src="${String(value)}" alt="${label}" style="max-width: 100%; max-height: 300px; border-radius: 4px; border: 1px solid #7dd3fc;" />`
+        return `<img src="${String(value)}" alt="${label}" style="max-width: 100%; max-height: 300px; border-radius: 4px; border: 1px solid var(--primary);" />`
       }
 
       case 'imageList': {
@@ -51,8 +52,8 @@ function RouteComponent() {
           .map(
             (item) =>
               `<div style="margin-bottom: 12px; text-align: center;">
-              <img src="${item.url}" alt="${item.description}" style="max-width: 100%; max-height: 200px; border-radius: 4px; border: 1px solid #7dd3fc;" />
-              ${item.description ? `<p style="margin-top: 4px; font-size: 0.875rem; color: #6b7280;">${item.description}</p>` : ''}
+              <img src="${item.url}" alt="${item.description}" style="max-width: 100%; max-height: 200px; border-radius: 4px; border: 1px solid var(--primary);" />
+              ${item.description ? `<p style="margin-top: 4px; font-size: 0.875rem; color: var(--muted-foreground);">${item.description}</p>` : ''}
             </div>`,
           )
           .join('')
@@ -77,7 +78,7 @@ function RouteComponent() {
       case 'number':
       default: {
         const displayValue = String(value)
-        return `<span style="background-color: #dbeafe; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block; border: 1px solid #7dd3fc;">${displayValue}</span>`
+        return `<span class="route-value-badge" style="padding: 4px 8px; border-radius: 4px; font-weight: 500; margin: 0 2px; display: inline-block;">${displayValue}</span>`
       }
     }
   }
@@ -125,9 +126,9 @@ function RouteComponent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-        <Card className="p-8 text-center">
-          <p className="text-gray-600">Carregando formulário...</p>
+      <div className="min-h-screen p-8 route-container flex items-center justify-center">
+        <Card className="p-8 text-center route-card">
+          <p className="route-text-muted">Carregando formulário...</p>
         </Card>
       </div>
     )
@@ -135,10 +136,10 @@ function RouteComponent() {
 
   if (!template) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen p-8 route-container">
         <div className="max-w-4xl mx-auto">
-          <Card className="p-8 text-center">
-            <p className="text-gray-600 mb-4">Nenhum template selecionado</p>
+          <Card className="p-8 text-center route-card">
+            <p className="route-text-muted mb-4">Nenhum template selecionado</p>
             <Button onClick={() => navigate({ to: '/templates' })}>
               Voltar para Templates
             </Button>
@@ -149,7 +150,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen p-8 route-container">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <Button
@@ -163,7 +164,7 @@ function RouteComponent() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Coluna de Formulário */}
           <div>
-            <Card className="p-6">
+            <Card className="p-6 route-card">
               <DynamicForm
                 title={template.title}
                 description={template.description}
@@ -178,10 +179,10 @@ function RouteComponent() {
 
           {/* Coluna de Preview */}
           <div>
-            <Card className="p-6 sticky top-8">
+            <Card className="p-6 sticky top-8 route-card">
               <h2 className="text-2xl font-bold mb-4">Previsualizacao</h2>
               <div
-                className="prose prose-sm max-w-none bg-white p-4 rounded border border-gray-200"
+                className="prose prose-sm max-w-none p-4 rounded route-preview-bg"
                 dangerouslySetInnerHTML={{ __html: getPreviewContent() }}
               />
             </Card>

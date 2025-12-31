@@ -13,7 +13,7 @@
 }
 
 .field-modal {
-  background: white;
+  background: var(--card);
   border-radius: 0.5rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   width: 90%;
@@ -26,7 +26,7 @@
 
 .field-modal-header {
   padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,14 +36,14 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--foreground);
 }
 
 .field-modal-close {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--muted-foreground);
   cursor: pointer;
   padding: 0;
   width: 2rem;
@@ -56,8 +56,8 @@
 }
 
 .field-modal-close:hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
+  background-color: var(--muted);
+  color: var(--foreground);
 }
 
 .field-modal-body {
@@ -77,20 +77,20 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #1f2937;
+  color: var(--foreground);
   margin-bottom: 0.5rem;
 }
 
 .field-modal-input-disabled {
-  background-color: #f3f4f6 !important;
-  color: #6b7280 !important;
+  background-color: var(--muted) !important;
+  color: var(--muted-foreground) !important;
   cursor: not-allowed !important;
 }
 
 .field-modal-help {
   display: block;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--muted-foreground);
   margin-top: 0.25rem;
 }
 
@@ -103,9 +103,9 @@
 
 .field-modal-type-btn {
   padding: 0.75rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border);
   border-radius: 0.375rem;
-  background: white;
+  background: var(--card);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -116,15 +116,15 @@
 }
 
 .field-modal-type-btn:hover {
-  border-color: #3b82f6;
-  background-color: #eff6ff;
+  border-color: var(--primary);
+  background-color: var(--accent);
 }
 
 .field-modal-type-selected {
-  border-color: #3b82f6;
-  background-color: #dbeafe;
+  border-color: var(--primary);
+  background-color: var(--secondary);
   font-weight: 600;
-  color: #1e40af;
+  color: var(--secondary-foreground);
 }
 
 .field-modal-type-emoji {
@@ -137,29 +137,30 @@
 
 .field-modal-error {
   padding: 0.75rem;
-  background-color: #fee2e2;
-  border: 1px solid #fecaca;
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--destructive);
   border-radius: 0.375rem;
-  color: #dc2626;
+  color: var(--destructive);
   font-size: 0.875rem;
   margin-top: 1rem;
 }
 
 .field-modal-footer {
   padding: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
 }
 
 .field-modal-save-btn {
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .field-modal-save-btn:hover {
-  background-color: #2563eb;
+  background-color: var(--primary);
+  opacity: 0.8;
 }
 
 /* Field Node Inline Badge */
@@ -175,13 +176,13 @@
 
 .field-node-badge {
   display: inline-block;
-  padding: 0.125rem 0.375rem;
-  background-color: #dbeafe;
-  border: 1px solid #93c5fd;
+  background-color: var(--color-secondary);
+  padding: 0.125rem var(--secondary);
+  border: 1px solid var(--primary);
   border-radius: 0.25rem;
   font-size: 0.8rem;
   font-weight: 500;
-  color: #1e40af;
+  color: var(--secondary-foreground);
   cursor: pointer;
   user-select: none;
   transition: all 0.2s;
@@ -192,7 +193,7 @@
 }
 
 .field-node-badge:hover {
-  background-color: #bfdbfe;
-  border-color: #60a5fa;
+  background-color: var(--accent);
+  border-color: var(--primary);
   box-shadow: 0 1px 3px rgba(59, 130, 246, 0.2);
 }

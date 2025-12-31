@@ -4,6 +4,7 @@ import type { FormField, FormTemplate } from '@/types/form'
 import { TemplateEditor } from '@/components/TemplateEditor'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import '../routes.css'
 
 export const Route = createFileRoute('/templates/create')({
   component: RouteComponent,
@@ -84,7 +85,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen p-8 route-container">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <Button
@@ -96,15 +97,15 @@ function RouteComponent() {
         </div>
 
         {isLoading ? (
-          <Card className="p-12 text-center text-gray-500">
+          <Card className="p-12 text-center route-card route-text-muted">
             Carregando template...
           </Card>
         ) : (
-          <Card className="p-6">
+          <Card className="p-6 route-card">
             <h1 className="text-3xl font-bold mb-2">
               {editingTemplate ? 'Editar Template' : 'Criar Novo Template'}
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="route-text-muted mb-6">
               {editingTemplate
                 ? 'Edite os dados do seu template'
                 : 'Crie um template com campos dinâmicos para seus formulários'}

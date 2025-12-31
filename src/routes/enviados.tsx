@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import type { FormSubmission } from '@/types/form'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import './routes.css'
 
 export const Route = createFileRoute('/enviados')({
   component: RouteComponent,
@@ -70,12 +71,12 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen p-8 route-container">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold mb-2">Envios</h1>
-            <p className="text-gray-600">
+            <p className="route-text-muted">
               Visualize todos os formulários enviados
             </p>
           </div>
@@ -88,12 +89,12 @@ function RouteComponent() {
         </div>
 
         {isLoading ? (
-          <Card className="p-12 text-center text-gray-500">
+          <Card className="p-12 text-center route-card route-text-muted">
             Carregando envios...
           </Card>
         ) : submissions.length === 0 ? (
-          <Card className="p-12 text-center">
-            <p className="text-gray-600 mb-4">Nenhum formulário enviado ainda</p>
+          <Card className="p-12 text-center route-card">
+            <p className="route-text-muted mb-4">Nenhum formulário enviado ainda</p>
             <Button
               variant="outline"
               onClick={() => navigate({ to: '/templates' })}
@@ -119,7 +120,7 @@ function RouteComponent() {
                 📥 Exportar CSV
               </Button>
               <div className="flex-1" />
-              <span className="text-sm text-gray-600 self-center">
+              <span className="text-sm route-text-muted self-center">
                 Total: {submissions.length} envio{submissions.length !== 1 ? 's' : ''}
               </span>
             </div>
@@ -128,14 +129,14 @@ function RouteComponent() {
               {submissions.map((submission) => (
                 <Card
                   key={submission.submissionId}
-                  className="p-6 hover:shadow-lg transition"
+                  className="p-6 hover:shadow-lg transition route-card"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
                       <h3 className="font-bold text-lg mb-1">
                         Envio #{submission.submissionId.slice(0, 8)}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm route-text-muted">
                         {new Date(submission.submittedAt).toLocaleString('pt-BR')}
                       </p>
                     </div>
@@ -149,15 +150,15 @@ function RouteComponent() {
                           : submission.submissionId,
                       )
                     }
-                    className="text-blue-600 hover:text-blue-700 font-medium"
+                    className="route-text-primary font-medium"
                   >
                     {expandedId === submission.submissionId ? '▼' : '▶'} Detalhes
                   </button>
 
                   {expandedId === submission.submissionId && (
                     <>
-                      <div className="bg-gray-50 p-4 rounded mb-4 max-h-96 overflow-auto">
-                        <pre className="text-xs whitespace-pre-wrap font-mono text-gray-700">
+                      <div className="route-submission-details p-4 rounded mb-4 max-h-96 overflow-auto">
+                        <pre className="text-xs whitespace-pre-wrap font-mono">
                           {JSON.stringify(submission.data, null, 2)}
                         </pre>
                       </div>

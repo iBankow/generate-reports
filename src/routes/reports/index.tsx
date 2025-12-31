@@ -6,6 +6,7 @@ import { DynamicForm } from '@/components/DynamicForm'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import '../routes.css'
 
 export const Route = createFileRoute('/reports/')({
   component: RouteComponent,
@@ -54,10 +55,10 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen p-8 route-container">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-2">Gerador de Relatórios</h1>
-        <p className="text-gray-600 mb-8">
+        <p className="route-text-muted mb-8">
           Crie templates de formulários dinâmicos com campos variáveis
         </p>
 
@@ -76,29 +77,30 @@ function RouteComponent() {
           </TabsList>
 
           <TabsContent value="templates" className="space-y-6 mt-6">
-            <Card className="p-6">
+            <Card className="p-6 route-card">
               <h2 className="text-2xl font-bold mb-4">Criar Novo Template</h2>
               <TemplateEditor onSave={handleSaveTemplate} />
             </Card>
 
             {templates.length > 0 && (
-              <Card className="p-6">
+              <Card className="p-6 route-card">
                 <h3 className="text-xl font-bold mb-4">Templates Criados</h3>
                 <div className="grid gap-4 md:grid-cols-2">
                   {templates.map((template) => (
                     <Card
                       key={template.id}
-                      className="p-4 border-2 hover:border-blue-500 cursor-pointer transition"
+                      className="p-4 border-2 cursor-pointer transition route-card"
+                      style={{ borderColor: 'var(--primary)' }}
                       onClick={() => handleSelectTemplate(template)}
                     >
                       <h4 className="font-bold text-lg mb-2">
                         {template.title}
                       </h4>
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p className="text-sm route-text-muted mb-3">
                         {template.description}
                       </p>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500">
+                        <span className="route-text-muted">
                           {template.fields.length} campos
                         </span>
                         <Button size="sm" variant="outline">
@@ -114,7 +116,7 @@ function RouteComponent() {
 
           <TabsContent value="form" className="mt-6">
             {selectedTemplate && (
-              <Card className="p-6">
+              <Card className="p-6 route-card">
                 <DynamicForm
                   title={selectedTemplate.title}
                   description={selectedTemplate.description}
@@ -129,24 +131,24 @@ function RouteComponent() {
 
           <TabsContent value="submissions" className="space-y-6 mt-6">
             {submissions.length === 0 ? (
-              <Card className="p-6 text-center text-gray-500">
+              <Card className="p-6 text-center route-card route-text-muted">
                 Nenhum formulário enviado ainda
               </Card>
             ) : (
               <div className="grid gap-4">
                 {submissions.map((submission) => (
-                  <Card key={submission.submissionId} className="p-6">
+                  <Card key={submission.submissionId} className="p-6 route-card">
                     <div className="mb-4">
                       <h4 className="font-bold text-lg mb-2">
                         Envio #{submission.submissionId}
                       </h4>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm route-text-muted">
                         {new Date(submission.submittedAt).toLocaleString(
                           'pt-BR',
                         )}
                       </p>
                     </div>
-                    <div className="bg-gray-50 p-4 rounded max-h-96 overflow-auto">
+                    <div className="route-submission-details p-4 rounded max-h-96 overflow-auto">
                       <pre className="text-xs whitespace-pre-wrap font-mono">
                         {JSON.stringify(submission.data, null, 2)}
                       </pre>

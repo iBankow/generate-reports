@@ -1,0 +1,83 @@
+/* Routes themed colors */
+
+.route-container {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+.route-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+}
+
+.route-text-muted {
+  color: var(--muted-foreground);
+}
+
+.route-text-primary {
+  color: var(--primary);
+}
+
+.route-bg-accent {
+  background-color: var(--accent);
+}
+
+.route-bg-secondary {
+  background-color: var(--secondary);
+}
+
+.route-border-primary {
+  border-color: var(--primary);
+}
+
+.route-button-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.route-button-primary:hover {
+  opacity: 0.8;
+}
+
+.route-preview-bg {
+  background-color: var(--card);
+  border-color: var(--border);
+}
+
+.route-empty-field {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+  border: 1px dashed var(--border);
+}
+
+.route-value-badge {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--primary);
+}
+
+.route-submission-details {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.route-number-badge {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.route-step-1 {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.route-step-2 {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
+.route-step-3 {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
